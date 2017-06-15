@@ -5,15 +5,15 @@ import Navigation from "../components/includes/Navigation";
 import { NotificationContainer } from 'react-notifications';
 
 export default class Layout extends React.Component{
-render(){
-const { location } = this.props;
+    render() {
+        const { location } = this.props;
         const containerStyle = {
             marginTop: "60px"
         };
-return(
+        return(
             <div>
-              <Navigation location={location} />
-              <NotificationContainer/>
+                <Navigation location={location} />
+                <NotificationContainer/>
                 <div class="container" style={containerStyle}>
                     <div class="row">
                         <div class="col-lg-12">

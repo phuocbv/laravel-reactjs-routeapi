@@ -38,6 +38,4 @@ Route::group(['middleware' => 'cors', 'prefix' => '/v1'], function () {
     Route::post('/users/create', 'UserController@store');
 
     Route::post('/users/delete', 'UserController@delete');
-
-
 });

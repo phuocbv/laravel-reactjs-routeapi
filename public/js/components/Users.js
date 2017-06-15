@@ -5,50 +5,46 @@ import { fetchUsers, deleteUser } from "./../actions/userActions";
 
 class Users extends React.Component{
 
-  constructor(){
-    super();
-    this.handleBtnDelete = this.handleBtnDelete.bind(this);
-  }
+    constructor(){
+        super();
+        this.handleBtnDelete = this.handleBtnDelete.bind(this);
+    }
 
-  componentWillMount(){
+    componentWillMount(){
+        this.props.dispatch(fetchUsers());
+    }
 
-    this.props.dispatch(fetchUsers());
+    handleBtnDelete(id, event){
+        event.preventDefault();
 
-  }
+        var r = confirm("Are you sure you want to delete this document!");
+        if (r == true) {
+            const url = baseUrl+"/api/v1/users/delete";
+            var formElement = document.getElementById("form_"+id);
+            var formData = new FormData(formElement);
+            this.props.dispatch(deleteUser(formData));
+        }
+    }
 
-  handleBtnDelete(id, event){
-    event.preventDefault();
+    render() {
 
-    var r = confirm("Are you sure you want to delete this document!");
-      if (r == true) {
-        const url = baseUrl+"/api/v1/users/delete";
-        var formElement = document.getElementById("form_"+id);
-        var formData = new FormData(formElement);
-        this.props.dispatch(deleteUser(formData));
-      }
-  }
-
-  render(){
-
-    return(
-              <div>
-                  <h1 className="pull-left">Users</h1>
-                  <div className="col-lg-12">
-
+        return(
+            <div>
+                <h1 className="pull-left">Users</h1>
+                <div className="col-lg-12">
                     <Link to="users/new" className="btn btn-primary btn-sm pull-left">Create New &nbsp; <i className="glyphicon glyphicon-plus"></i></Link>
 
                     <table className="table table-responsive">
-
-                      <thead>
-                        <tr>
-                          <th>Name</th>
-                          <th>Email</th>
-                          <th>Phone Number</th>
-                          <th>Contact Address</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Contact Address</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         { this.props.users.map((user, index) => {
                             return (
                               <tr key={index+1}>
@@ -68,19 +64,19 @@ class Users extends React.Component{
                               </tr>
                             )
                           }) }
-                      </tbody>
-
+                        </tbody>
                     </table>
 
-                  </div>
-              </div>
-          );
-        }
-  }
-
-  function mapStateToProps(state) {
-    return {
-      users: state.users.users,
+                </div>
+            </div>
+        );
     }
-  }
-  export default connect(mapStateToProps)(Users)
+}
+
+function mapStateToProps(state) {
+    return {
+        users: state.users.users,
+    }
+}
+
+export default connect(mapStateToProps)(Users)

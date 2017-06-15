@@ -20,10 +20,9 @@ class NewUser extends React.Component{
 
   handleSubmit(event) {
     event.preventDefault();
-
     var formElement = document.querySelector("form");
     var formData = new FormData(formElement);
-    axios.post(baseUrl+"api/v1/users/create", formData)
+    axios.post(baseUrl + "api/v1/users/create", formData)
       .then((response) => {
         this.context.router.push('/users');
         NotificationManager.success('User has been created!', 'Success', 5000);
